@@ -18,12 +18,9 @@ services:
       - "traefik.http.routers.hours.tls.certresolver=le"
       # FastAPI listens on port 8000
       - "traefik.http.services.hours.loadbalancer.server.port=8000"
-      # HTTP → HTTPS redirect router
-      - "traefik.http.routers.santoriello-frontend-http.rule=Host(`hours.santoriello.ch`)"
-      - "traefik.http.routers.santoriello-frontend-http.entrypoints=web"
-      - "traefik.http.routers.santoriello-frontend-http.middlewares=redirect-to-https"
-      # Middleware to redirect HTTP → HTTPS
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # security-headers and gzip-compress live in Traefik's file provider
+      # (dynamic/middlewares.yml); the @file suffix selects that provider.
+      - "traefik.http.routers.hours.middlewares=security-headers@file,gzip-compress@file"
     networks:
       - proxy-network
 
