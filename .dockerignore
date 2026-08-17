@@ -1,0 +1,28 @@
+# Build context is the repo root (docker-compose.yml: `build: .`).
+
+# The live SQLite database lives here via a bind mount. It must never be
+# copied into an image layer.
+data/
+
+# Never ship VCS metadata into a layer
+.git/
+.gitignore
+
+# Never bake configuration or secrets into an image layer.
+# Both forms are required: .dockerignore patterns are anchored at the context
+# root, so a bare `.env` does NOT match a nested `frontend/.env`.
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Editor and CI noise
+.idea/
+*.iml
+.vscode/
+.github/
+*.md
+__pycache__/
+*.py[cod]
