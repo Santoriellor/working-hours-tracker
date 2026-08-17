@@ -7,6 +7,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Guard the ref here as well as in the trigger: if the trigger is ever
+    # widened to run this workflow on a branch, this is what stops a feature
+    # branch deploying to production.
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
