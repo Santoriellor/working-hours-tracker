@@ -12,8 +12,11 @@ COPY app/ ./app/
 # VPS: /data is a host bind mount (./data:/data), so the container uid must be
 # able to write to a host directory. A mismatch here means the app starts and
 # then fails on the first database write.
-RUN groupadd --gid 1000 app \
-    && useradd --uid 1000 --gid 1000 --no-create-home --shell /usr/sbin/nologin app \
+# getent guards: these base images already ship a default user at uid/gid 1000,
+# so a bare groupadd/useradd exits non-zero and fails the build. The numeric
+# uid is what matters - /app must be owned by 1000 either way.
+RUN (getent group 1000 || groupadd --gid 1000 app) \
+    && (getent passwd 1000 || useradd --uid 1000 --gid 1000 --no-create-home --shell /usr/sbin/nologin app) \
     && mkdir -p /data \
     && chown -R 1000:1000 /data /app
 
