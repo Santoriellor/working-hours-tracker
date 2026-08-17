@@ -2,7 +2,7 @@ name: Deploy to Private Server
 
 on:
   push:
-    branches: [ main, security/phase-2e-tests ]
+    branches: [ main ]
 
 jobs:
   test:
