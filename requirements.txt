@@ -6,3 +6,8 @@ aiosqlite==0.22.1
 fastapi==0.141.1
 pydantic==2.13.4
 uvicorn==0.52.3
+
+# Test-only. Kept in the single requirements file because the Dockerfile installs
+# from it and the image is small; httpx is what FastAPI's TestClient needs.
+pytest==8.3.5
+httpx==0.28.1
