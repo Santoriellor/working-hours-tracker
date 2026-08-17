@@ -1,0 +1,8 @@
+# Pinned to the versions running in production as of 2026-08-17, read from the
+# live container with `pip list --format=freeze`. The Dockerfile previously ran
+# `pip install fastapi uvicorn aiosqlite` with no versions, so every rebuild
+# could pick up a new major release of any of them.
+aiosqlite==0.22.1
+fastapi==0.141.1
+pydantic==2.13.4
+uvicorn==0.52.3
